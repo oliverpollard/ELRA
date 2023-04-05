@@ -3,6 +3,7 @@ import scipy.special as sc
 from tqdm.auto import tqdm
 import xarray as xr
 import rioxarray
+import sys
 
 ICE_DENSITY = 916  # (kg/m3)
 MANTLE_DENSITY = 3300  # (kg/m3)
@@ -112,3 +113,21 @@ class Deformer:
             dict(x=self.x, y=self.y)
         )
         return topography_deformed_ds
+
+
+if __name__ == "__main__":
+    args = sys.argv
+    topography_nc_file = args[1]
+    ice_nc_file = args[2]
+    time = float(args[3])
+    coarsen_window = float(args[4])
+    output_nc_file = args[5]
+
+    topography_da = xr.open_dataset(topography_nc_file).z
+    ice_da = xr.open_dataset(ice_nc_file).ice_thickness
+    deformer = Deformer(topography_da=topography_da, coarsen_window=10)
+    if time is not None:
+        ice_da = ice_da.sel(time=time)
+
+    deformed_topography = deformer.deform(ice_da=ice_da)
+    deformed_topography.to_netcdf(output_nc_file)
