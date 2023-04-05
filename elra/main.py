@@ -122,6 +122,7 @@ if __name__ == "__main__":
     time = float(args[3])
     coarsen_window = float(args[4])
     output_nc_file = args[5]
+    print(args)
 
     topography_da = xr.open_dataset(topography_nc_file).z
     ice_da = xr.open_dataset(ice_nc_file).ice_thickness
