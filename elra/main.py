@@ -104,7 +104,8 @@ class Deformer:
             },
             attrs=None,
         )
-        topography_deformed_coarse_ds.rio.write_crs(self.crs, inplace=True)
+        if self.crs is not None:
+            topography_deformed_coarse_ds.rio.write_crs(self.crs, inplace=True)
 
         # interpolate back to grid and save
         topography_deformed_ds = topography_deformed_coarse_ds.interp(
