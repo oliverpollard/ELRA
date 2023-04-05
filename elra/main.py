@@ -71,12 +71,12 @@ class Deformer:
         return self.topography_coarse_da.x.values
 
     @property
-    def topography_coarse(self):
-        return self.topography_coarse_da.values
-
-    @property
     def y_coarse(self):
         return self.topography_coarse_da.y.values
+
+    @property
+    def topography_coarse(self):
+        return self.topography_coarse_da.values
 
     def deform(self, ice_da):
         ice_coarse_da = ice_da.coarsen(
@@ -87,7 +87,7 @@ class Deformer:
         topography_deformed_coarse = deform(
             grid_x=self.x_coarse,
             grid_y=self.y_coarse,
-            topography=self.topography_coarse_da,
+            topography=self.topography_coarse,
             ice_thickness=ice_coarse,
         )
         # convert to xarray dataset
