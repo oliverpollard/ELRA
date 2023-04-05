@@ -11,7 +11,6 @@ GRAVIATIONAL_ACC = 9.81
 
 
 def deform(grid_x, grid_y, topography, ice_thickness, D=None):
-
     if D is None:
         D = 10**25  # flexural rigidity (N m)
 
@@ -29,7 +28,6 @@ def deform(grid_x, grid_y, topography, ice_thickness, D=None):
     x_mesh, y_mesh = np.meshgrid(grid_x, grid_y)
     for i in tqdm(range(len(grid_y)), leave=False):
         for j in range(len(grid_x)):
-
             dx_mesh = x_mesh - grid_x[j]
             dy_mesh = y_mesh - grid_y[i]
             r = np.sqrt(dx_mesh**2 + dy_mesh**2)
@@ -115,7 +113,7 @@ class Deformer:
         return topography_deformed_ds
 
 
-if __name__ == "__main__":
+def main():
     args = sys.argv
     topography_nc_file = args[1]
     ice_nc_file = args[2]
